@@ -7,3 +7,4 @@ doc
 gemfiles/*.gemfile.lock
 pkg
 mws.yml
+.idea

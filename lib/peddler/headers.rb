@@ -3,6 +3,10 @@
 module Peddler
   # Parses useful metadata returned in response headers
   module Headers
+
+    # The character encoding map
+    CHARSET_MAPPINGS = { 'UTF8' => 'UTF-8' }.freeze
+
     # The size of the response body in bytes
     # @return [String, nil]
     def content_length
@@ -47,7 +51,8 @@ module Peddler
       match_data = headers['Content-Type']&.match(/charset=(.*);?/)
       return unless match_data
 
-      Encoding.find(match_data[1])
+      charset = match_data[1]
+      Encoding.find(CHARSET_MAPPINGS.fetch(charset) { charset })
     end
 
     # The max hourly request quota for the requested operation
